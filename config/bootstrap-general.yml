@@ -1,0 +1,1751 @@
+#  ███████╗██████╗ ██████╗ ██╗███╗   ██╗ ██████╗ 
+#  ██╔════╝██╔══██╗██╔══██╗██║████╗  ██║██╔════╝ 
+#  ███████╗██████╔╝██████╔╝██║██╔██╗ ██║██║  ███╗
+#  ╚════██║██╔═══╝ ██╔══██╗██║██║╚██╗██║██║   ██║
+#  ███████║██║     ██║  ██║██║██║ ╚████║╚██████╔╝
+#  ╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝ 
+
+spring:
+  jackson:
+  
+    default-property-inclusion: NON_NULL
+    
+    serialization: 
+      write-dates-as-timestamps: false 
+      
+    deserialization:
+      fail-on-unknown-properties: false
+
+  cloud:
+    bus:
+      enabled: false
+              
+  #   ██████╗ █████╗  ██████╗██╗  ██╗███████╗
+  #  ██╔════╝██╔══██╗██╔════╝██║  ██║██╔════╝
+  #  ██║     ███████║██║     ███████║█████╗  
+  #  ██║     ██╔══██║██║     ██╔══██║██╔══╝  
+  #  ╚██████╗██║  ██║╚██████╗██║  ██║███████╗
+  #   ╚═════╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝     
+  cache:
+    type: redis
+  redis:
+    host: localhost
+    port: 6379
+    password: 
+    ssl: false
+    abortConnect: false
+    timeout: 2000
+    master:
+      host: localhost
+      port: 6379
+      password: 
+      ssl: false
+      timeout: 2
+    slave:
+      host: localhost
+      port: 6379
+      password: 
+      ssl: false
+      timeout: 2
+yape:
+  redis:
+    client: redisson #lettuce
+    enable-reactive-connection: false
+    primary:
+      host: localhost
+      port: 6379
+      password: 
+      ssl: false
+      timeout: PT2S
+      redisson:
+        threads: 16
+        netty-threads: 32
+        connection-pool-size: 10
+        connection-minimum-idle-size: 1
+        connect-timeout: PT5S
+        retry-attempts: 1
+        retry-interval: PT2S
+        idle-connection-timeout: PT5S
+        ping-connection-interval: PT30S
+    secondary:
+      host: localhost
+      port: 6379
+      password: 
+      ssl: false
+      timeout: PT2S
+      redisson:
+        threads: 16
+        netty-threads: 32
+        connection-pool-size: 10
+        connection-minimum-idle-size: 1
+        connect-timeout: PT5S
+        retry-attempts: 1
+        retry-interval: PT2S
+        idle-connection-timeout: PT5S
+        ping-connection-interval: PT30S
+
+      
+#   █████╗ ██████╗ ██████╗ ██╗     ██╗ ██████╗ █████╗ ████████╗██╗ ██████╗ ███╗   ██╗
+#  ██╔══██╗██╔══██╗██╔══██╗██║     ██║██╔════╝██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
+#  ███████║██████╔╝██████╔╝██║     ██║██║     ███████║   ██║   ██║██║   ██║██╔██╗ ██║
+#  ██╔══██║██╔═══╝ ██╔═══╝ ██║     ██║██║     ██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
+#  ██║  ██║██║     ██║     ███████╗██║╚██████╗██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
+#  ╚═╝  ╚═╝╚═╝     ╚═╝     ╚══════╝╚═╝ ╚═════╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+
+application:
+
+  env: DES
+
+  #   ██████╗ ███████╗███╗   ██╗███████╗██████╗  █████╗ ██╗     
+  #  ██╔════╝ ██╔════╝████╗  ██║██╔════╝██╔══██╗██╔══██╗██║     
+  #  ██║  ███╗█████╗  ██╔██╗ ██║█████╗  ██████╔╝███████║██║     
+  #  ██║   ██║██╔══╝  ██║╚██╗██║██╔══╝  ██╔══██╗██╔══██║██║     
+  #  ╚██████╔╝███████╗██║ ╚████║███████╗██║  ██║██║  ██║███████╗
+  #   ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
+    
+  atlas:
+  
+    prefix: AP
+    resource-bundle:
+      
+      starter-name: application
+      default-label: messages-1.0
+      default-suffix: messages
+      static-path: classpath:i18n/messages
+      default-encoding: UTF-8
+      timeout-on-find: 2500 # Timeout in milliseconds
+     
+    cache:
+      isLocal:
+        default:
+          expire-after: 4000
+          maximum-size: 500
+          
+    # since 2.4.0
+    filter:
+      excluded-path-patterns:
+        default:
+          - /swagger-resources/**
+          - /webjars/swagger-resources/**
+          - /webjars/springfox-swagger-ui/**
+          - /swagger-ui.html/**
+          - /swagger-ui.html
+          - /swagger2.json
+          - /openapi
+          - /openapi.yaml
+          - /openapi.json
+          - /favicon.ico
+          - /actuator/
+    http:
+      # since 2.4.0
+      header:
+        defaults:
+          - 
+            name: Authorization
+          - 
+            name: authorization
+          -
+            name: Request-ID
+            required: true
+          -
+            name: request-date
+            required: true
+          -
+            name: app-code
+            required: true
+          -
+            name: caller-name
+            required: true
+          -
+            name: dest-app-code
+          -
+            name: app-name
+          -
+            name: user-doc-number
+          -
+            name: user-doc-type
+          -
+            name: user-code
+          -
+            name: supervisor-code
+          -
+            name: org-code
+          -
+            name: server-terminal
+          -
+            name: server-app
+          -
+            name: branch-office-code
+          -
+            name: agency-code
+          -
+            name: orig-device-id
+          -
+            name: orig-device-ip
+          -
+            name: orig-device-mac
+          -
+            name: orig-device-number
+          -
+            name: orig-device-reference
+          -
+            name: device-info
+          -
+            name: card-number
+          -
+            name: product-number
+          -
+            name: tio-aux
+          -
+            name: start-date
+          -
+            name: end-date
+          -
+            name: start-date-tech
+          -
+            name: session-UID
+          -
+            name: server-ip
+          -
+            name: server-name
+          -
+            name: login
+          -
+            name: cust-doc-number
+          -
+            name: cust-doc-type
+          -
+            name: cust-full-name
+          -
+            name: cust-name
+          -
+            name: cust-father-last-name
+          -
+            name: cust-mother-last-name
+          -
+            name: cust-email
+          -
+            name: cust-profile-code
+          -
+            name: cust-seg-code
+          -
+            name: cust-seg-sub-code
+          -
+            name: client-code
+          -
+            name: opn-number
+          -
+            name: opn-reverse-number
+          -
+            name: opn-code
+          -
+            name: opn-sub-code
+          -
+            name: opn-type
+          -
+            name: opn-currency-code
+          -
+            name: opn-amount
+          -
+            name: opn-exchange-rate
+          -
+            name: user-cic
+          -
+            name: user-idc
+          -
+            name: Cache-Control
+          -
+            name: Pragma
+          -
+            name: Expires
+          -
+            name: x-ok-sms
+
+      # since 2.3.0
+      logging:
+        active: true
+        exclude-path-patterns:
+          - /swagger-resources/**
+          - /webjars/swagger-resources/**
+          - /webjars/springfox-swagger-ui/**
+          - /error
+          - /swagger-ui.html/**
+          - /swagger-ui.html
+          - /swagger2.json
+          - /favicon.ico
+          - /actuator/
+           
+    # since 2.4.0
+    # general obfuscation list
+    obfuscation-rules:
+      enabled: true
+      default-reg-exp: '.+'
+      default-replacement: '*****'
+      sensitive-fields:
+        -
+          name: 'displayName'
+          config[0]:
+            minLength: 2
+            maxLength: 50
+            regExp: '^([\w\W]{2})[\w\W]+$'
+            replacement: '$1*******'
+            active: true
+        -
+          name: 'content'
+          config[0]:
+            minLength: 100
+            maxLength: 100000
+            regExp: '[\W\w]+'
+            replacement: '****************'
+            active: true
+        -
+          name: 'fatherNames'
+          config[0]:
+            minLength: 2
+            maxLength: 50
+            regExp: '^([\w\W]{2})[\w\W]+$'
+            replacement: '$1*******'
+            active: true
+        -
+          name: 'legalName'
+          config[0]:
+            minLength: 2
+            maxLength: 50
+            regExp: '^([\w\W]{2})[\w\W]+$'
+            replacement: '$1*******'
+            active: true
+        -
+          name: 'name'
+          config[0]:
+            minLength: 2
+            maxLength: 50
+            regExp: '^([\w\W]{2})[\w\W]+$'
+            replacement: '$1*******'
+            active: true
+        -
+          name: 'names'
+          config[0]:
+            minLength: 2
+            maxLength: 50
+            regExp: '^([\u0000-\uffff]{2})([\u0000-\uffff]*)$'
+            replacement: '$1*******'
+            active: true
+        -
+          name: 'userName'
+          config[0]:
+            minLength: 2
+            maxLength: 50
+            regExp: '^([\w\W]{2})[\w\W]+$'
+            replacement: '$1*******'
+            active: true
+        -
+          name: 'fatherLastName'
+          config[0]:
+            minLength: 2
+            maxLength: 50
+            regExp: '^([\u0000-\uffff]{2})([\u0000-\uffff]*)$'
+            replacement: '$1*******'
+            active: true
+        -
+          name: 'lastName'
+          config[0]:
+            minLength: 2
+            maxLength: 50
+            regExp: '^([\u0000-\uffff]{2})([\u0000-\uffff]*)$'
+            replacement: '$1*******'
+            active: true
+        -
+          name: 'fullname'
+          config[0]:
+            minLength: 2
+            maxLength: 50
+            regExp: '^([\u0000-\uffff]{2})([\u0000-\uffff]*)$'
+            replacement: '$1*******'
+            active: true
+        -
+          name: 'marriedLastName'
+          config[0]:
+            minLength: 2
+            maxLength: 50
+            regExp: '^([\w\W]{2})[\w\W]+$'
+            replacement: '$1*******'
+            active: true
+        -
+          name: 'motherLastName'
+          config[0]:
+            minLength: 2
+            maxLength: 50
+            regExp: '^([\w\W]{2})[\w\W]+$'
+            replacement: '$1*******'
+            active: true
+        -
+          name: 'citizenId'
+          config[0]:
+            minLength: 5
+            maxLength: 16
+            regExp: '^\d+(\d{2})$'
+            replacement: '************$1'
+            active: true
+        -
+          name: 'customerId'
+          config[0]:
+            minLength: 5
+            maxLength: 16
+            regExp: '^\d+(\d{2})$'
+            replacement: '************$1'
+            active: true
+        -
+          name: 'idc'
+          config[0]:
+            minLength: 5
+            maxLength: 16
+            regExp: '^\d+(\d{2})$'
+            replacement: '************$1'
+            active: true
+        -
+          name: 'cic'
+          config[0]:
+            minLength: 3
+            maxLength: 12
+            regExp: '^[a-zA-z\d]+([a-zA-z\d]{2})$'
+            replacement: '************$1'
+            active: true
+        -
+          name: 'personCic'
+          config[0]:
+            minLength: 3
+            maxLength: 12
+            regExp: '^[a-zA-z\d]+([a-zA-z\d]{2})$'
+            replacement: '************$1'
+            active: true
+        -
+          name: 'consumerId'
+          config[0]:
+            minLength: 5
+            maxLength: 16
+            regExp: '^\d+(\d{2})$'
+            replacement: '************$1'
+            active: true
+        -
+          name: 'personId'
+          config[0]:
+            minLength: 5
+            maxLength: 15
+            regExp: '^[a-zA-Z\d]+([a-zA-Z\d]{5})$'
+            replacement: '************$1'
+            active: true
+        -
+          name: 'ruc'
+          config[0]:
+            minLength: 11
+            maxLength: 11
+            regExp: '^\d+(\d{2})$'
+            replacement: '*********$1'
+            active: true
+        -
+          name: 'streetName'
+          config[0]:
+            minLength: 1
+            maxLength: 40
+            regExp: '^([\w\W]{4})[\w\W]+$'
+            replacement: '$1*********'
+            active: true
+        -
+          name: 'streetNumber'
+          config[0]:
+            minLength: 1
+            maxLength: 5
+            regExp: '^[\d]+$'
+            replacement: '*****'
+            active: true
+        -
+          name: 'blockCode'
+          config[0]:
+            minLength: 1
+            maxLength: 3
+            regExp: '^[\w\W]+$'
+            replacement: '***'
+            active: true
+        -
+          name: 'lotNumber'
+          config[0]:
+            minLength: 1
+            maxLength: 3
+            regExp: '^[\w\W]+$'
+            replacement: '***'
+            active: true
+        -
+          name: 'urbanizationName'
+          config[0]:
+            minLength: 1
+            maxLength: 30
+            regExp: '^([\w\W]{4})[\w\W]+$'
+            replacement: '$1*******'
+            active: true
+        -
+          name: 'summary'
+          config[0]:
+            minLength: 1
+            maxLength: 60
+            regExp: '^([\w\W]{4})[\w\W]+$'
+            replacement: '$1*********'
+            active: true
+        -
+          name: 'reference'
+          config[0]:
+            minLength: 2
+            maxLength: 60
+            regExp: '^([\w\W]{4})[\w\W]+$'
+            replacement: '$1*********'
+            active: true
+        -
+          name: 'phone'
+          config[0]:
+            minLength: 7
+            maxLength: 9
+            regExp: '^\d+(\d{2})$'
+            replacement: '*******$1'
+            active: true
+          config[1]:
+            minLength: 7
+            maxLength: 12
+            regExp: '^[\+]{0,1}\d+(\d{2})$'
+            replacement: '*****$1'
+            active: true
+        -
+          name: 'phoneNumber'
+          config[0]:
+            minLength: 7
+            maxLength: 12
+            regExp: '^[\+]{0,1}\d+(\d{2})$'
+            replacement: '*****$1'
+            active: true
+          config[1]:
+            minLength: 12
+            maxLength: 15
+            regExp: '^[\d%2Bb+]+([\d%2Bb+]{2})$'
+            replacement: '*******$1'
+            active: true
+        -
+          name: 'phoneNumbers'
+          config[0]:
+            regExp: '[\%0-9A-B\,\+]+(\d{2})$'
+            replacement: '*****$1'
+            active: true
+          
+        -
+          name: 'officePhone'
+          config[0]:
+            minLength: 7
+            maxLength: 9
+            regExp: '^\d+(\d{2})$'
+            replacement: '*******$1'
+            active: true
+        -
+          name: 'email'
+          config[0]:
+            minLength: 1
+            maxLength: 426
+            regExp: '^([\u0000-\uffff]{2})[\u0000-\uffff]+(@[a-zA-Z0-9_\-\.]+\.[a-zA-Z]{2,5})$'
+            replacement: '$1************$2'
+            active: true
+        -
+          name: 'emailAddress'
+          config[0]:
+            minLength: 1
+            maxLength: 426
+            regExp: '^([a-zA-Z0-9_\-\.]{2})[a-zA-Z0-9_\-\.]+(@[a-zA-Z0-9_\-\.]+\.[a-zA-Z]{2,5})$'
+            replacement: '$1************$2'
+            active: true
+        -
+          name: 'birthDate'
+          config[0]:
+            minLength: 8
+            maxLength: 10
+            regExp: '^(\d{1,4})[\/\\-]\d{1,4}[\/\\-]\d{1,4}$'
+            replacement: '$1/**/**'
+            active: true
+          config[1]:
+            minLength: 1
+            maxLength: 426
+            regExp: '^(\d{1,2})[a-zA-Z0-9\s]+$'
+            replacement: '$1*********'
+            active: true
+        -
+          name: 'gender'
+          config[0]:
+            minLength: 1
+            maxLength: 1
+            regExp: '^[A-Z]{1}$'
+            replacement: '*'
+            active: true
+        -
+          name: 'loanId'
+          config[0]:
+            minLength: 20
+            maxLength: 20
+            regExp: '^\d+(\d{3})$'
+            replacement: '*****************$1'
+            active: true
+        -
+          name: 'mortagageLoanOrderID'
+          config[0]:
+            minLength: 20
+            maxLength: 20
+            regExp: '^\d+(\d{3})$'
+            replacement: '*****************$1'
+            active: true
+        -
+          name: 'formattedLoanNumber'
+          config[0]:
+            minLength: 22
+            maxLength: 22
+            regExp: '^[-\d]+([-\d]{3})$'
+            replacement: '*******************$1'
+            active: true
+        -
+          name: 'employeeId'
+          config[0]:
+            minLength: 6
+            maxLength: 7
+            regExp: '^[a-zA-Z0-9]+([a-zA-Z0-9]{2})$'
+            replacement: '****$1'
+            active: true
+        -
+          name: 'accountId'
+          config[0]:
+            minLength: 13
+            maxLength: 15
+            regExp: '^\d+(\d{3})$'
+            replacement: '**********$1'
+            active: true
+          config[1]:
+            minLength: 4
+            maxLength: 12
+            regExp: '^\d+(\d{3})$'
+            replacement: '*****$1'
+            active: true
+          config[2]:
+            minLength: 20
+            maxLength: 20
+            regExp: '^\d+(\d{3})$'
+            replacement: '*****************$1'
+            active: true
+        -
+          name: 'formattedAccountNumber'
+          config[0]:
+            minLength: 16
+            maxLength: 18
+            regExp: '^[-\d]+([-\d]{3})$'
+            replacement: '*************$1'
+            active: true
+        -
+          name: 'accountNumber'
+          config[0]:
+            minLength: 13
+            maxLength: 16
+            regExp: '^[-\d]+([-\d]{3})$'
+            replacement: '*************$1'
+            active: true
+        -
+          name: 'insuranceId'
+          config[0]:
+            minLength: 13
+            maxLength: 13
+            regExp: '^\d+(\d{3})$'
+            replacement: '**********$1'
+            active: true
+        -
+          name: 'insuranceReferenceId'
+          config[0]:
+            minLength: 13
+            maxLength: 13
+            regExp: '^\d+(\d{3})$'
+            replacement: '**********$1'
+            active: true
+        -
+          name: 'indebtednessCapacityId'
+          config[0]:
+            minLength: 15
+            maxLength: 15
+            regExp: '^\d+$'
+            replacement: '***************'
+            active: true
+        -
+          name: 'formattedIndebtednessCapacityNumber'
+          config[0]:
+            minLength: 16
+            maxLength: 16
+            regExp: '^[-\d]+$'
+            replacement: '****************'
+            active: true
+        -
+          name: 'cardId'
+          config[0]:
+            minLength: 15
+            maxLength: 16
+            regExp: '^(\d{4})\d+(\d{4})$'
+            replacement: '$1********$2'
+            active: true
+        -
+          name: 'creditCardId'
+          config[0]:
+            minLength: 15
+            maxLength: 16
+            regExp: '^(\d{4})\d+(\d{4})$'
+            replacement: '$1********$2'
+            active: true
+          config[1]:
+            minLength: 18
+            maxLength: 19
+            regExp: '^000(\d{4})\d+(\d{4})$'
+            replacement: '$1***********$2'
+            active: true
+        -
+          name: 'formattedCreditCardNumber'
+          config[0]:
+            minLength: 17
+            maxLength: 19
+            regExp: '^(\d{4})[-\d]+(\d{4})$'
+            replacement: '$1**********$2'
+            active: true
+        -
+          name: 'netAmount'
+          config[0]:
+            minLength: 1
+            maxLength: 10
+            regExp: '^[\.\d]+$'
+            replacement: '*******'
+            active: true
+        -
+          name: 'baseAmount'
+          config[0]:
+            minLength: 1
+            maxLength: 10
+            regExp: '^[\.\d]+$'
+            replacement: '*******'
+            active: true
+        -
+          name: 'amount'
+          config[0]:
+            minLength: 1
+            maxLength: 10
+            regExp: '^[\.\d]+$'
+            replacement: '*******'
+            active: true
+        -
+          name: 'rate'
+          config[0]:
+            minLength: 1
+            maxLength: 10
+            regExp: '^[\.\d]+$'
+            replacement: '*******'
+            active: true
+        -
+          name: 'persons'
+          config[0]: #personId pathparam
+            minLength: 5
+            maxLength: 15
+            regExp: '^[a-zA-Z\d]+([a-zA-Z\d]{5})$'
+            replacement: '************$1'
+            active: true
+        -
+          name: 'accounts'
+          config[0]: #accountId pathparam
+            minLength: 20
+            maxLength: 20
+            regExp: '^\d+(\d{3})$'
+            replacement: '*****************$1'
+            active: true
+        -
+          name: 'loans'
+          config[0]: #loanId pathparam
+            minLength: 20
+            maxLength: 20
+            regExp: '^\d+(\d{3})$'
+            replacement: '*****************$1'
+            active: true
+          config[1]:
+            minLength: 22
+            maxLength: 22
+            regExp: '^[-\d]+([-\d]{3})$'
+            replacement: '*******************$1'
+            active: true
+        -
+          name: 'saving-accounts'
+          config[0]: #accountId pathparam
+            minLength: 15
+            maxLength: 15
+            regExp: '^\d+(\d{3})$'
+            replacement: '************$1'
+            active: true
+          config[1]: #accountId pathparam
+            minLength: 17
+            maxLength: 17
+            regExp: '^[-\d]+([-\d]{3})$'
+            replacement: '****************$1'
+            active: true
+        -
+          name: 'cards'
+          config[0]: #cardId pathparam
+            minLength: 15
+            maxLength: 19
+            regExp: '^(\d{4})[-\d]+(\d{4})$'
+            replacement: '$1*********$2'
+            active: true
+        -
+          name: 'credit-cards'
+          config[0]: #creditCardId pathparam
+            minLength: 15
+            maxLength: 16
+            regExp: '^(\d{4})\d+(\d{4})$'
+            replacement: '$1********$2'
+            active: true
+          config[1]:
+            minLength: 18
+            maxLength: 19
+            regExp: '^000(\d{4})\d+(\d{4})$'
+            replacement: '$1***********$2'
+            active: true
+        -
+          name: 'X-Original-URI'
+          config[0]:
+            minLength: 5
+            maxLength: 1000
+            regExp: '[\W\w]+'
+            replacement: '****************'
+            active: true
+        - 
+          name: 'cardNumber'
+          config[0]: # card number
+            minLength: 15
+            maxLength: 16
+            regExp: '^(\d{4})\d+(\d{6})$'
+            replacement: '$1******$2'
+            active: true
+        -
+          name: 'resource'
+          config[0]:
+            minLength: 13
+            maxLength: 16
+            regExp: '^\d+(\d{3})$'
+            replacement: '**********$1'
+            active: true
+          config[1]:
+            regExp: '[\%0-9A-B\,\+]+(\d{2})$'
+            replacement: '*****$1'
+            active: true
+        -
+          name: 'merchantName'
+          config[0]:
+            minLength: 2
+            maxLength: 50
+            regExp: '^([\u0000-\uffff]{2})([\u0000-\uffff]*)$'
+            replacement: '$1*******'
+            active: true
+        -
+          name: 'cardNumberOrig'
+          config[0]:
+            minLength: 15
+            maxLength: 16
+            regExp: '^(\d{4})\d+(\d{4})$'
+            replacement: '$1********$2'
+            active: true
+          config[1]:
+            minLength: 17
+            maxLength: 19
+            regExp: '^(\d{4})[-\d]+(\d{4})$'
+            replacement: '$1**********$2'
+            active: true
+        -
+          name: 'cardNumberDest'
+          config[0]:
+            minLength: 15
+            maxLength: 16
+            regExp: '^(\d{4})\d+(\d{4})$'
+            replacement: '$1********$2'
+            active: true
+          config[1]:
+            minLength: 17
+            maxLength: 19
+            regExp: '^(\d{4})[-\d]+(\d{4})$'
+            replacement: '$1**********$2'
+            active: true
+        -
+          name: 'accountNumberOrig'
+          config[0]:
+            minLength: 14
+            maxLength: 16
+            regExp: '^[-\d]+([-\d]{3})$'
+            replacement: '*************$1'
+            active: true
+        -
+          name: 'accountNumberDest'
+          config[0]:
+            minLength: 14
+            maxLength: 16
+            regExp: '^[-\d]+([-\d]{3})$'
+            replacement: '*************$1'
+            active: true
+        -
+          name: 'phoneNumberOrig'
+          config[0]:
+            minLength: 7
+            maxLength: 12
+            regExp: '^[\+]{0,1}\d+(\d{2})$'
+            replacement: '*****$1'
+            active: true
+          config[1]:
+            minLength: 12
+            maxLength: 15
+            regExp: '^[\d%2Bb+]+([\d%2Bb+]{2})$'
+            replacement: '*******$1'
+            active: true
+        -
+          name: 'phoneNumberDest'
+          config[0]:
+            minLength: 7
+            maxLength: 12
+            regExp: '^[\+]{0,1}\d+(\d{2})$'
+            replacement: '*****$1'
+            active: true
+          config[1]:
+            minLength: 12
+            maxLength: 15
+            regExp: '^[\d%2Bb+]+([\d%2Bb+]{2})$'
+            replacement: '*******$1'
+            active: true
+        -
+          name: 'cardOwnerNameOrig'
+          config[0]:
+            minLength: 2
+            maxLength: 50
+            regExp: '^([\u0000-\uffff]{2})([\u0000-\uffff]*)$'
+            replacement: '$1*******'
+            active: true
+        -
+          name: 'cardOwnerNameDest'
+          config[0]:
+            minLength: 2
+            maxLength: 50
+            regExp: '^([\u0000-\uffff]{2})([\u0000-\uffff]*)$'
+            replacement: '$1*******'
+            active: true
+        -
+          name: 'cardOwnerName'
+          config[0]:
+            minLength: 2
+            maxLength: 50
+            regExp: '^([\u0000-\uffff]{2})([\u0000-\uffff]*)$'
+            replacement: '$1*******'
+            active: true
+        -
+          name: 'expirationYear'
+          config[0]:
+            regExp: '^\d+'
+            replacement: '****'
+            active: true
+        -
+          name: 'expirationMonth'
+          config[0]:
+            regExp: '^\d+'
+            replacement: '**'
+            active: true
+        -
+          name: 'qrCode'
+          config[0]:
+            minLength: 5
+            maxLength: 500
+            regExp: '[\W\w]+'
+            replacement: '*************************'
+            active: true
+        -
+          name: 'fullName'
+          config[0]:
+            minLength: 2
+            maxLength: 60
+            regExp: '^([\w\W]{2})[\w\W]+$'
+            replacement: '$1*******'
+            active: true
+        -
+          name: 'codUba'
+          config[0]:
+            minLength: 1
+            maxLength: 100
+            regExp: '[\W\w]+'
+            replacement: '*************'
+            active: true
+        -
+          name: 'token'
+          config[0]:
+            minLength: 1
+            maxLength: 100
+            regExp: '[\W\w]+'
+            replacement: '*************'
+            active: true
+        -
+          name: 'expirationDate'
+          config[0]:
+            regExp: '^\d+'
+            replacement: '*******'
+            active: true
+        -
+          name: 'bucketVal'
+          config[0]:
+            minLength: 5
+            maxLength: 100
+            regExp: '[\W\w]+'
+            replacement: '*************************'
+            active: true
+        -
+          name: 'visaTokenOrig'
+          config[0]:
+            minLength: 1
+            maxLength: 100
+            regExp: '[\W\w]+'
+            replacement: '*************************'
+            active: true
+        -
+          name: 'visaTokenDest'
+          config[0]:
+            minLength: 1
+            maxLength: 100
+            regExp: '[\W\w]+'
+            replacement: '*************************'
+            active: true
+        -
+          name: 'codUbaOrig'
+          config[0]:
+            minLength: 1
+            maxLength: 100
+            regExp: '[\W\w]+'
+            replacement: '*************************'
+            active: true
+        -
+          name: 'codUbaDest'
+          config[0]:
+            minLength: 1
+            maxLength: 100
+            regExp: '[\W\w]+'
+            replacement: '*************************'
+            active: true
+        -
+          name: 'referenceId'
+          config[0]:
+            minLength: 13
+            maxLength: 14
+            regExp: '^[-\d]+([-\d]{3})$'
+            replacement: '*************$1'
+            active: true
+          config[1]: 
+            minLength: 15
+            maxLength: 100
+            regExp: '[\W\w]+'
+            replacement: '****************'
+            active: true
+        -
+          name: 'formattedProductNumber'
+          config[0]:
+            minLength: 13
+            maxLength: 14
+            regExp: '^[-\d]+([-\d]{3})$'
+            replacement: '*************$1'
+            active: true
+          config[1]: 
+            minLength: 15
+            maxLength: 100
+            regExp: '[\W\w]+'
+            replacement: '****************'
+            active: true
+        -
+          name: 'tokenId'
+          config[0]:
+            minLength: 1
+            maxLength: 100
+            regExp: '[\W\w]+'
+            replacement: '*************************'
+            active: true
+        -
+          name: 'cashtag'
+          config[0]:
+            minLength: 7
+            maxLength: 12
+            regExp: '^[\+]{0,1}\d+(\d{2})$'
+            replacement: '*****$1'
+            active: true
+          config[1]:
+            minLength: 12
+            maxLength: 15
+            regExp: '^[\d%2Bb+]+([\d%2Bb+]{2})$'
+            replacement: '*******$1'
+            active: true
+        -
+          name: 'cashTag'
+          config[0]:
+            minLength: 7
+            maxLength: 12
+            regExp: '^[\+]{0,1}\d+(\d{2})$'
+            replacement: '*****$1'
+            active: true
+          config[1]:
+            minLength: 12
+            maxLength: 15
+            regExp: '^[\d%2Bb+]+([\d%2Bb+]{2})$'
+            replacement: '*****$1'
+            active: true
+        -
+          name: 'to'
+          config[0]:
+            minLength: 7
+            maxLength: 12
+            regExp: '^[\+]{0,1}\d+(\d{2})$'
+            replacement: '*****$1'
+            active: true
+        -
+          name: 'value'
+          config[0]:
+            minLength: 2
+            maxLength: 50
+            regExp: '^([\u0000-\uffff]{2})([\u0000-\uffff]*)$'
+            replacement: '$1*******'
+            active: true
+          config[1]:
+            minLength: 1
+            maxLength: 10
+            regExp: '^[\.\d]+$'
+            replacement: '*******'
+            active: true
+        -
+          name: 'maxAmountOtp'
+          config[0]:
+            minLength: 1
+            maxLength: 10
+            regExp: '^[\.\d]+$'
+            replacement: '*******'
+            active: true
+        -
+          name: 'amountMaxSendDay'
+          config[0]:
+            minLength: 1
+            maxLength: 10
+            regExp: '^[\.\d]+$'
+            replacement: '*******'
+            active: true
+        -
+          name: 'amountMaxReceptionDay'
+          config[0]:
+            minLength: 1
+            maxLength: 10
+            regExp: '^[\.\d]+$'
+            replacement: '*******'
+            active: true
+        -
+          name: 'amountMaxReceptionMonth'
+          config[0]:
+            minLength: 1
+            maxLength: 10
+            regExp: '^[\.\d]+$'
+            replacement: '*******'
+            active: true
+        -
+          name: 'amountMaxBalanceDay'
+          config[0]:
+            minLength: 1
+            maxLength: 10
+            regExp: '^[\.\d]+$'
+            replacement: '*******'
+            active: true
+        -
+          name: 'amountMaxTransactionMonth'
+          config[0]:
+            minLength: 1
+            maxLength: 10
+            regExp: '^[\.\d]+$'
+            replacement: '*******'
+            active: true
+        -
+          name: 'amountMaxRetirementDay'
+          config[0]:
+            minLength: 1
+            maxLength: 10
+            regExp: '^[\.\d]+$'
+            replacement: '*******'
+            active: true
+        -
+          name: 'amountMinRetirement'
+          config[0]:
+            minLength: 1
+            maxLength: 10
+            regExp: '^[\.\d]+$'
+            replacement: '*******'
+            active: true
+        -
+          name: 'amountMaxRechargeDay'
+          config[0]:
+            minLength: 1
+            maxLength: 10
+            regExp: '^[\.\d]+$'
+            replacement: '*******'
+            active: true
+        -
+          name: 'amountMaxRechargeMonth'
+          config[0]:
+            minLength: 1
+            maxLength: 10
+            regExp: '^[\.\d]+$'
+            replacement: '*******'
+            active: true
+        -
+          name: 'client_id'
+          config[0]:
+            minLength: 36
+            maxLength: 36
+            regExp: '^[-\a-f0-9]+([-\a-f0-9]{5})$'
+            replacement: '*******-****-****-****-*******$1'
+            active: true
+        -
+          name: 'client_secret'
+          config[0]:
+            minLength: 36
+            maxLength: 36
+            regExp: '^[-\a-f0-9]+([-\a-f0-9]{5})$'
+            replacement: '*******-****-****-****-*******$1'
+            active: true
+        -
+          name: 'access_token'
+          config[0]:
+            minLength: 36
+            maxLength: 36
+            regExp: '^[-\a-f0-9]+([-\a-f0-9]{5})$'
+            replacement: '*******-****-****-****-*******$1'
+            active: true
+        -
+          name: 'authorization'
+          config[0]:
+            minLength: 5
+            maxLength: 1500
+            regExp: '^([\W\w]{25})[\W\w]+$'
+            replacement: '$1***********************'
+            active: true
+        -
+          name: 'Authorization'
+          config[0]:
+            minLength: 5
+            maxLength: 1500
+            regExp: '^([\W\w]{25})[\W\w]+$'
+            replacement: '$1***********************'
+            active: true
+        -
+          name: 'Ocp-Apim-Subscription-Key'
+          config[0]:
+            minLength: 5
+            maxLength: 1500
+            regExp: '^[\W\w]{4}[\W\w]+$'
+            replacement: '********************'
+            active: true
+         
+    swagger:
+    
+      default:
+        codes: 
+        - 204
+        - 400
+        - 500
+    # general obfuscation list
+  
+    #   ██████╗██╗   ██╗██████╗ ██████╗ ███████╗███╗   ██╗ ██████╗██╗   ██╗
+    #  ██╔════╝██║   ██║██╔══██╗██╔══██╗██╔════╝████╗  ██║██╔════╝╚██╗ ██╔╝
+    #  ██║     ██║   ██║██████╔╝██████╔╝█████╗  ██╔██╗ ██║██║      ╚████╔╝ 
+    #  ██║     ██║   ██║██╔══██╗██╔══██╗██╔══╝  ██║╚██╗██║██║       ╚██╔╝  
+    #  ╚██████╗╚██████╔╝██║  ██║██║  ██║███████╗██║ ╚████║╚██████╗   ██║   
+    #   ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝ ╚═════╝   ╚═╝   
+
+    currency:
+    
+      to-iso:
+        '1001': USD
+        '0001': PEN
+        '1094': EUR
+        
+      from-iso:
+        USD: 1001
+        PEN: 0001
+        EUR: 1094
+      
+  
+    #  ███████╗██████╗ ██████╗  ██████╗ ██████╗      ██████╗ ██████╗ ██████╗ ███████╗
+    #  ██╔════╝██╔══██╗██╔══██╗██╔═══██╗██╔══██╗    ██╔════╝██╔═══██╗██╔══██╗██╔════╝
+    #  █████╗  ██████╔╝██████╔╝██║   ██║██████╔╝    ██║     ██║   ██║██║  ██║█████╗  
+    #  ██╔══╝  ██╔══██╗██╔══██╗██║   ██║██╔══██╗    ██║     ██║   ██║██║  ██║██╔══╝  
+    #  ███████╗██║  ██║██║  ██║╚██████╔╝██║  ██║    ╚██████╗╚██████╔╝██████╔╝███████╗
+    #  ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝     ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝
+
+    error-code:
+      
+      invalid-request:
+        code: TL0003
+        error-type: FUNCTIONAL
+        http-status: 400
+        description: Los datos proporcionados no son validos.
+        
+      argument-mismatch:
+        code: TL0003
+        error-type: FUNCTIONAL
+        http-status: 400
+        description: Parametro de entrada no coincide con la especificacion de su formato.
+        
+      # Pending for system code
+      unauthorized:
+        code: TL0011 
+        error-type: FUNCTIONAL
+        http-status: 401
+        description: No esta autorizado correctamente para ejecutar esta operacion.
+      
+      # Pending for system code
+      forbidden:
+        code: TL0011 
+        error-type: FUNCTIONAL
+        http-status: 403
+        description: No tiene los permisos necesarios para ejecutar esta operacion.
+        
+      resource-not-found:
+        code: TL0010
+        error-type: FUNCTIONAL
+        http-status: 404
+        description: No se encontro el recurso solicitado en la busqueda.
+
+      conflict:
+        code: TL0004 
+        error-type: TECHNICAL
+        http-status: 409
+        description: Conflicto entre el recurso a actualizar y el que se encuentra en el sistema.
+        
+      precondition-failed:
+        code: TL0006
+        error-type: TECHNICAL
+        http-status: 412
+        description: Conflicto entre el recurso a actualizar y el que se encuentra en el sistema.
+        
+      external-error:
+        code: TL0007
+        error-type: FUNCTIONAL
+        http-status: 500
+        description: Ocurrio un error en el servicio externo.
+        
+      host-not-found:
+        code: TL0005
+        error-type: TECHNICAL
+        http-status: 500
+        description: No se encontro el servidor solicitado.
+        
+      unexpected:
+        code: TL9999
+        error-type: TECHNICAL
+        http-status: 500
+        description: Ocurrio un error inesperado. Por favor contactarse con el Soporte Tecnico.
+        suppress-details: false
+        
+      external-timeout:
+        code: TL0009
+        error-type: TECHNICAL
+        http-status: 503
+        description: Ocurrio un error intentando invocar servicios externos. Por favor contactarse con el Soporte Tecnico.
+        
+      postcondition-failed:
+        code: TL0012
+        error-type: FUNCTIONAL
+        http-status: 500
+        description: Los datos proporcionados no cumplen con los criterios para ser procesados posteriormente..        
+
+      # Circuit Breaker
+      service-unavailable:
+        code: TL0004
+        error-type: TECHNICAL
+        http-status: 503
+        description: El servicio no se encuentra disponible. Por favor reintente mas tarde.          
+
+      not-implemented:
+        code: TL0013
+        error-type: FUNCTIONAL
+        http-status: 501
+        description: Funcionalidad no implementada.      
+  
+  yape:
+    error-code:
+      suppress-all-details: false
+      unexpected:
+        code: YP99
+        description: Ocurrio un error inesperado. Por favor contactarse con el Soporte Tecnico .
+        error-type: Technical
+        
+    azure: 
+      blob:
+        connection-string: 'DefaultEndpointsProtocol=https;AccountName=staceu2yapebackd10;AccountKey=2pt3t5awK9r7GIrl49xUMbXoTNpHPHOXruMzyiITLMlrlZuN3wGAoJ58ymeqOF3mwC+tjlRFhCCxXCAzQdCyTQ==;EndpointSuffix=core.windows.net'
+        component: 'AZ.BLOB-STORAGE'
+      
+      database:      
+        cosmosdb:
+          uri: https://codbeu2yaped10.documents.azure.com:443/
+          key: qDdyI7mXjj6hmSMrWuaebgRIOTIPlbTGZQ2u8JdORdi3Kox7wwT7OHf5XkEbpRDHdj8CcBqBPdyTeyh3gDuutA==
+          populateQueryMetrics: true
+          responseDiagnostics: false
+
+    aws:
+      database:
+        mysql:
+          #url: 'jdbc:mysql://yape-encrypted.clw2e0sztyav.us-west-2.rds.amazonaws.com:3307/yape?useSSL=false'
+          url: 'jdbc:mysql://10.1.8.222:3306/yape?useSSL=false'
+          username: root
+          #password: '{cipher}d90c4993254760eff8a842523b8156ac7f7d6a684cb101837e139d4299a60ec9'
+          password: password
+    
+    encryption:
+      enabled: true
+      key-vault:
+        uri: https://akvteu2yaped10.vault.azure.net/
+        key-identifier: https://akvteu2yaped10.vault.azure.net/keys/yape-crypto-rsa-cer/b3e228e15b434ae7bdf6d8c2b1e5c241
+        decrypt-algorithm: RSA-OAEP
+        credentials:
+          client-id: /opt/security/certs/yape-keyvault-client-id/yape-keyvault-client-id
+          client-public-certificate-file: /opt/security/certs/yape-keyvault-public-cert/yape-keyvault-public-cert.pem
+          client-private-key-file: /opt/security/certs/yape-keyvault-private-key/yape-keyvault-private-key.key
+        secrets:
+          algorithm: AES/CTR/NoPadding
+          key: yape-cypher-key
+          initialization-vector: yape-cypher-initialization-vector
+  
+  
+  #   █████╗ ██╗   ██╗████████╗██╗  ██╗ ██████╗ ██████╗ ██╗███████╗ █████╗ ████████╗██╗ ██████╗ ███╗   ██╗
+  #  ██╔══██╗██║   ██║╚══██╔══╝██║  ██║██╔═══██╗██╔══██╗██║╚══███╔╝██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║
+  #  ███████║██║   ██║   ██║   ███████║██║   ██║██████╔╝██║  ███╔╝ ███████║   ██║   ██║██║   ██║██╔██╗ ██║
+  #  ██╔══██║██║   ██║   ██║   ██╔══██║██║   ██║██╔══██╗██║ ███╔╝  ██╔══██║   ██║   ██║██║   ██║██║╚██╗██║
+  #  ██║  ██║╚██████╔╝   ██║   ██║  ██║╚██████╔╝██║  ██║██║███████╗██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║
+  #  ╚═╝  ╚═╝ ╚═════╝    ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝╚══════╝╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+# since 2.3.0
+  authorization: #properties especifico
+    gateway:
+      active: false
+      enabled: false
+          
+      # (To remove exclude-path-patterns when 2.4.0-RC3 is ready)
+      exclude-path-patterns:
+        - /swagger-resources/**
+        - /webjars/swagger-resources/**
+        - /webjars/springfox-swagger-ui/**
+        - /error
+        - /swagger-ui.html/**
+        - /swagger2.json
+        # since 2.4.0
+        - /openapi.yaml
+        - /openapi.json
+        # end since 2.4.0
+        - /favicon.ico
+        - /actuator/
+  
+  #   ██████╗██╗██████╗  ██████╗██╗   ██╗██╗████████╗    ██████╗ ██████╗ ███████╗ █████╗ ██╗  ██╗███████╗██████╗ 
+  #  ██╔════╝██║██╔══██╗██╔════╝██║   ██║██║╚══██╔══╝    ██╔══██╗██╔══██╗██╔════╝██╔══██╗██║ ██╔╝██╔════╝██╔══██╗
+  #  ██║     ██║██████╔╝██║     ██║   ██║██║   ██║       ██████╔╝██████╔╝█████╗  ███████║█████╔╝ █████╗  ██████╔╝
+  #  ██║     ██║██╔══██╗██║     ██║   ██║██║   ██║       ██╔══██╗██╔══██╗██╔══╝  ██╔══██║██╔═██╗ ██╔══╝  ██╔══██╗
+  #  ╚██████╗██║██║  ██║╚██████╗╚██████╔╝██║   ██║       ██████╔╝██║  ██║███████╗██║  ██║██║  ██╗███████╗██║  ██║
+  #   ╚═════╝╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝   ╚═╝       ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
+
+  circuit-breaker:
+    
+    #   █████╗ ████████╗██╗      █████╗ ███████╗
+    #  ██╔══██╗╚══██╔══╝██║     ██╔══██╗██╔════╝
+    #  ███████║   ██║   ██║     ███████║███████╗
+    #  ██╔══██║   ██║   ██║     ██╔══██║╚════██║
+    #  ██║  ██║   ██║   ███████╗██║  ██║███████║
+    #  ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝
+      
+    atlas:
+      default:
+        slidingWindowSize: 50   # Ring size of calls (Closed State)
+        permittedNumberOfCallsInHalfOpenState: 10 # Ring size of calls (Half-Open State)
+        failureRateThreshold: 50          # Percentage
+        waitDurationInOpenState: 3000
+        #waitDurationInOpenState: PT3S     # Java Duration format
+      error-catalog:
+        slidingWindowSize: 30   # Ring size of calls (Closed State)
+        permittedNumberOfCallsInHalfOpenState: 10 # Ring size of calls (Half-Open State)
+        failureRateThreshold: 50          # Percentage
+        waitDurationInOpenState: 10000
+        #waitDurationInOpenState: PT10S    # Java Duration format
+    
+    #  ██╗   ██╗ █████╗ ██████╗ ███████╗
+    #  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔════╝
+    #   ╚████╔╝ ███████║██████╔╝█████╗  
+    #    ╚██╔╝  ██╔══██║██╔═══╝ ██╔══╝  
+    #     ██║   ██║  ██║██║     ███████╗
+    #     ╚═╝   ╚═╝  ╚═╝╚═╝     ╚══════╝    
+    yape:
+      default:
+        slidingWindowSize: 50   # Ring size of calls (Closed State)
+        permittedNumberOfCallsInHalfOpenState: 10 # Ring size of calls (Half-Open State)
+        failureRateThreshold: 50          # Percentage
+        waitDurationInOpenState: PT3S     # Java Duration format
+
+
+  #  ██╗  ██╗████████╗████████╗██████╗      ██████╗██╗     ██╗███████╗███╗   ██╗████████╗
+  #  ██║  ██║╚══██╔══╝╚══██╔══╝██╔══██╗    ██╔════╝██║     ██║██╔════╝████╗  ██║╚══██╔══╝
+  #  ███████║   ██║      ██║   ██████╔╝    ██║     ██║     ██║█████╗  ██╔██╗ ██║   ██║   
+  #  ██╔══██║   ██║      ██║   ██╔═══╝     ██║     ██║     ██║██╔══╝  ██║╚██╗██║   ██║   
+  #  ██║  ██║   ██║      ██║   ██║         ╚██████╗███████╗██║███████╗██║ ╚████║   ██║   
+  #  ╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚═╝          ╚═════╝╚══════╝╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   
+
+  http-client:
+    
+    atlas:
+    
+      #   █████╗ ████████╗██╗      █████╗ ███████╗    ███████╗██╗   ██╗██████╗ ██████╗  ██████╗ ██████╗ ████████╗
+      #  ██╔══██╗╚══██╔══╝██║     ██╔══██╗██╔════╝    ██╔════╝██║   ██║██╔══██╗██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝
+      #  ███████║   ██║   ██║     ███████║███████╗    ███████╗██║   ██║██████╔╝██████╔╝██║   ██║██████╔╝   ██║   
+      #  ██╔══██║   ██║   ██║     ██╔══██║╚════██║    ╚════██║██║   ██║██╔═══╝ ██╔═══╝ ██║   ██║██╔══██╗   ██║   
+      #  ██║  ██║   ██║   ███████╗██║  ██║███████║    ███████║╚██████╔╝██║     ██║     ╚██████╔╝██║  ██║   ██║   
+      #  ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝    ╚══════╝ ╚═════╝ ╚═╝     ╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   
+    
+      support:
+      
+        error-catalog-v2:
+          base-url: https://azapimdesa.credito.bcp.com.pe/
+          connect-timeout: 301
+          read-timeout: 1200
+          write-timeout: 800
+          
+        funct-audit-hub:
+          base-url: https://azapimdesa.credito.bcp.com.pe
+          connect-timeout: 3000
+          read-timeout: 3000
+          write-timeout: 3000
+          
+        risk-analyze-hub:
+          base-url: https://azapimdesa.credito.bcp.com.pe
+          connect-timeout: 3000
+          read-timeout: 3000
+          write-timeout: 3000
+
+
+    yape:
+      #  ██╗   ██╗ █████╗ ██████╗ ███████╗    ███████╗██╗   ██╗██████╗ ██████╗  ██████╗ ██████╗ ████████╗
+      #  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔════╝    ██╔════╝██║   ██║██╔══██╗██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝
+      #   ╚████╔╝ ███████║██████╔╝█████╗      ███████╗██║   ██║██████╔╝██████╔╝██║   ██║██████╔╝   ██║   
+      #    ╚██╔╝  ██╔══██║██╔═══╝ ██╔══╝      ╚════██║██║   ██║██╔═══╝ ██╔═══╝ ██║   ██║██╔══██╗   ██║   
+      #     ██║   ██║  ██║██║     ███████╗    ███████║╚██████╔╝██║     ██║     ╚██████╔╝██║  ██║   ██║   
+      #     ╚═╝   ╚═╝  ╚═╝╚═╝     ╚══════╝    ╚══════╝ ╚═════╝ ╚═╝     ╚═╝      ╚═════╝ ╚═╝  ╚═╝   ╚═╝   
+    
+      support:
+        keyboard-v1:
+          base-url: https://support-keyboard-v1.yape.svc.cluster.local:9443
+          connect-timeout: 25000
+          read-timeout: 30000
+          write-timeout: 25000
+          component:
+            default: support-keyboard-v1
+            
+        sales-saga-coordinator-v1:
+          base-url: https://support-sales-saga-coordinator-v1.yape.svc.cluster.local:9443
+          connect-timeout: 1000
+          read-timeout: 5000
+          write-timeout: 5000
+          component:
+            default: support-sales-saga-coordinator-v1
+    
+      #  ██╗   ██╗ █████╗ ██████╗ ███████╗     ██████╗██████╗  ██████╗ ███████╗███████╗
+      #  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔════╝    ██╔════╝██╔══██╗██╔═══██╗██╔════╝██╔════╝
+      #   ╚████╔╝ ███████║██████╔╝█████╗      ██║     ██████╔╝██║   ██║███████╗███████╗
+      #    ╚██╔╝  ██╔══██║██╔═══╝ ██╔══╝      ██║     ██╔══██╗██║   ██║╚════██║╚════██║
+      #     ██║   ██║  ██║██║     ███████╗    ╚██████╗██║  ██║╚██████╔╝███████║███████║
+      #     ╚═╝   ╚═╝  ╚═╝╚═╝     ╚══════╝     ╚═════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝ 
+    
+      cross:
+        party:
+          customer-profile:
+            user-v1: #RELEASE 1
+              base-url: https://business-user-v1.yape.svc.cluster.local:9443
+              connect-timeout: 25000
+              read-timeout: 30000
+              write-timeout: 25000
+              component:
+                default: business-user-v1
+                
+            user-v2: #RELEASE 3
+              base-url: https://business-user-v2.yape.svc.cluster.local:9443
+              connect-timeout: 25000
+              read-timeout: 30000
+              write-timeout: 25000
+              component:
+                default: business-user-v2
+                
+          party-data-management:
+            account-v1: #RELEASE 1
+              base-url: https://business-account-v1.yape.svc.cluster.local:9443
+              connect-timeout: 25000
+              read-timeout: 30000
+              write-timeout: 25000
+              component:
+                default: business-account-v1
+                
+            account-v2: #RELEASE 2
+              base-url: https://business-account-v2.yape.svc.cluster.local:9443
+              connect-timeout: 25000
+              read-timeout: 30000
+              write-timeout: 25000
+              component:
+                default: business-account-v2
+                
+            account-v3: #RELEASE 3
+              base-url: https://business-account-v3.yape.svc.cluster.local:9443
+              connect-timeout: 25000
+              read-timeout: 30000
+              write-timeout: 25000
+              component:
+                default: business-account-v3
+            qrcode-v1: 
+              base-url: https://business-qrcode-v1.yape.svc.cluster.local:9443
+              connect-timeout: 25000
+              read-timeout: 30000
+              write-timeout: 25000
+              component:
+                default: business-qrcode-v1
+        sales:
+          underwriting:
+            suspect-data-v1:
+              base-url: https://business-suspect-data-v1.yape.svc.cluster.local:9443
+              connect-timeout: 25000
+              read-timeout: 30000
+              write-timeout: 25000
+              component:
+                default: business-suspect-data-v1
+                
+        channel-specific:
+          e-branch-management:
+            device-v1: #RELEASE 2
+              base-url: https://business-device-v1.yape.svc.cluster.local:9443
+              connect-timeout: 25000
+              read-timeout: 30000
+              write-timeout: 25000
+              component:
+                default: business-device-v1
+                
+            device-v2: #RELEASE 3
+              base-url: https://business-device-v2.yape.svc.cluster.local:9443
+              connect-timeout: 25000
+              read-timeout: 30000
+              write-timeout: 25000
+              component:
+                default: business-device-v2
+                
+        operational-services:
+          channel-activity-analysis:
+            lockout-threshold-v1: #RELEASE 1
+              base-url: https://business-lockout-threshold-v1.yape.svc.cluster.local:9443
+              connect-timeout: 25000
+              read-timeout: 30000
+              write-timeout: 25000
+              component:
+                default: business-lockout-threshold-v1
+                
+            lockout-threshold-v2: #RELEASE 3
+              base-url: https://business-lockout-threshold-v2.yape.svc.cluster.local:9443
+              connect-timeout: 25000
+              read-timeout: 30000
+              write-timeout: 25000
+              component:
+                default: business-lockout-threshold-v2
+                
+    
+#  ███████╗███████╗ ██████╗██╗   ██╗██████╗ ██╗████████╗██╗   ██╗
+#  ██╔════╝██╔════╝██╔════╝██║   ██║██╔══██╗██║╚══██╔══╝╚██╗ ██╔╝
+#  ███████╗█████╗  ██║     ██║   ██║██████╔╝██║   ██║    ╚████╔╝ 
+#  ╚════██║██╔══╝  ██║     ██║   ██║██╔══██╗██║   ██║     ╚██╔╝  
+#  ███████║███████╗╚██████╗╚██████╔╝██║  ██║██║   ██║      ██║   
+#  ╚══════╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝   ╚═╝      ╚═╝   
+
+#encrypt:
+#  key: 294979e512cb8e79370dabecadc3fcbb849e78d2d6bd2049 #cambiar -cert-prod
+
+security:
+  ignored: /**
+  
+  
+  
+#  ███╗   ███╗ █████╗ ███╗   ██╗ █████╗  ██████╗ ███████╗███╗   ███╗███████╗███╗   ██╗████████╗
+#  ████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝ ██╔════╝████╗ ████║██╔════╝████╗  ██║╚══██╔══╝
+#  ██╔████╔██║███████║██╔██╗ ██║███████║██║  ███╗█████╗  ██╔████╔██║█████╗  ██╔██╗ ██║   ██║   
+#  ██║╚██╔╝██║██╔══██║██║╚██╗██║██╔══██║██║   ██║██╔══╝  ██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║   
+#  ██║ ╚═╝ ██║██║  ██║██║ ╚████║██║  ██║╚██████╔╝███████╗██║ ╚═╝ ██║███████╗██║ ╚████║   ██║   
+#  ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   
+  
+  
+# since 2.3.0
+management:
+  endpoint:
+    health:
+      enabled: true
+      show-details: always #permite visualizar todos los actuators activos
+    info.enabled: true
+    loggers.enabled: true
+    env.enabled: true
+    refresh.enabled: true
+  health:
+    defaults.enabled: true #desactiva todos los actuators por defector
+  endpoints:
+    enabled-by-default: false
+    web:
+      enabled: true
+      expose: health,info,loggers,env,refresh
+      exposure:
+        include: health,info,loggers,env,refresh
+health:
+  config:
+    enabled: false #desactiva el actuator del config-server        
+        
+        
+        
+#  ████████╗██╗  ██╗██████╗ ███████╗ █████╗ ██████╗ ███████╗    ██████╗ ██████╗ ██╗   ██╗███╗   ██╗███╗   ██╗██╗███╗   ██╗ ██████╗ 
+#  ╚══██╔══╝██║  ██║██╔══██╗██╔════╝██╔══██╗██╔══██╗██╔════╝    ██╔══██╗██╔══██╗██║   ██║████╗  ██║████╗  ██║██║████╗  ██║██╔════╝ 
+#     ██║   ███████║██████╔╝█████╗  ███████║██║  ██║███████╗    ██████╔╝██████╔╝██║   ██║██╔██╗ ██║██╔██╗ ██║██║██╔██╗ ██║██║  ███╗
+#     ██║   ██╔══██║██╔══██╗██╔══╝  ██╔══██║██║  ██║╚════██║    ██╔═══╝ ██╔══██╗██║   ██║██║╚██╗██║██║╚██╗██║██║██║╚██╗██║██║   ██║
+#     ██║   ██║  ██║██║  ██║███████╗██║  ██║██████╔╝███████║    ██║     ██║  ██║╚██████╔╝██║ ╚████║██║ ╚████║██║██║ ╚████║╚██████╔╝
+#     ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝ ╚══════╝    ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═══╝ ╚═════╝ 
+                                                                                                                                
+rx2:
+  purge-enabled: true          
+
+
+  #   ██████╗██╗██████╗  ██████╗██╗   ██╗██╗████████╗    ██████╗ ██████╗ ███████╗ █████╗ ██╗  ██╗███████╗██████╗
+  #  ██╔════╝██║██╔══██╗██╔════╝██║   ██║██║╚══██╔══╝    ██╔══██╗██╔══██╗██╔════╝██╔══██╗██║ ██╔╝██╔════╝██╔══██╗
+  #  ██║     ██║██████╔╝██║     ██║   ██║██║   ██║       ██████╔╝██████╔╝█████╗  ███████║█████╔╝ █████╗  ██████╔╝
+  #  ██║     ██║██╔══██╗██║     ██║   ██║██║   ██║       ██╔══██╗██╔══██╗██╔══╝  ██╔══██║██╔═██╗ ██╔══╝  ██╔══██╗
+  #  ╚██████╗██║██║  ██║╚██████╗╚██████╔╝██║   ██║       ██████╔╝██║  ██║███████╗██║  ██║██║  ██╗███████╗██║  ██║
+  #   ╚═════╝╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝   ╚═╝       ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 30
+      minimumNumberOfCalls: 10
+      permittedNumberOfCallsInHalfOpenState: 10
+      automaticTransitionFromOpenToHalfOpenEnabled: false
+      waitDurationInOpenState: 10s
+      failureRateThreshold: 50
+      recordFailurePredicate: com.bcp.atlas.core.http.utils.AtlasHttpClientRecordFailurePredicate
+  instances:
+    atlas-default:
+      baseConfig: default
+      slidingWindowSize: 50
+      waitDurationInOpenState: PT3S
+    atlas-error-catalog:
+      baseConfig: default
+      
+logging.level:
+  com.bcp.atlas.core.starter.web.advice.logging: TRACE
+  com.bcp.atlas.core.http.client.interceptor: TRACE
+
+  # atlas version >= 2.4
+  com.atlas.event: TRACE
+  org.apache.kafka: TRACE
+  com.bcp.atlas.log: TRACE
+  com.bcp.atlas.log.sensitive.server: TRACE
+  com.bcp.atlas.log.sensitive.client: TRACE
+
