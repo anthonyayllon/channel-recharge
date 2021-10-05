@@ -1,0 +1,31 @@
+spring:
+  application:
+    #YAPE - Igual que el <artifactId>
+    name: channel-yapeapp-recharge
+  cloud:
+    config:
+      #YAPE - Igual que el <artifactId> + major version
+      name: channel-yapeapp-recharge-v1
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  main:
+    allow-bean-definition-overriding: true
+    lazy-initialization: false
+
+  webflux:
+    base-path: /channel/yapeapp/v1/recharge
+    static-path-pattern: /swagger/**
+
+info:
+  project:
+    name: '@project.name@'
+    description: '@project.description@'
+    version: '@project.version@'
+    type: channel
+    artifact-id: '@project.artifactId@'
+
+management:
+  endpoints:
+    web:
+      base-path: ${spring.webflux.base-path}/actuator

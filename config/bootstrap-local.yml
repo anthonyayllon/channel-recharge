@@ -1,0 +1,463 @@
+server:
+  port: 9025
+
+application:
+  env: DEV
+  atlas:
+    encryption:
+      enabled: true
+      models:
+        'com.yape.person.services.channel.yapeapp.recharge.entity.limits.KeyLimit':
+          - key
+        'com.yape.person.services.channel.yapeapp.recharge.entity.service.payment.PaymentTransactionEntity':
+          - fullName
+          - phoneNumberOrig
+          - cardNumberOrig
+          - accountNumberOrig
+          - bucketValOrig
+          - bucketValDest
+          - cellphoneToRecharge
+          - nameToRecharge
+          - cardOwnerName
+          - accountNumberDest
+          - email
+          - description
+          - cardOwnerNameDest
+          - details.request
+        'com.yape.person.services.channel.yapeapp.recharge.entity.service.payment.PaymentRechargeTxDetail':
+          - request
+          - response
+    http:
+      logging.active: true
+    obfuscation:
+      active: true
+    error-code:
+      unexpected:
+        suppress-details: true
+    api:
+      headers:
+        sequence:
+          clientCode: YP
+          opnCode: "001"
+          expiration: 360
+        common:
+          org-code: 1
+          user-code: 'U000001'
+          opn-code: '13'
+          client-code: YP
+          agency-code: '023'
+          app-name: YAPE
+        custom:
+          cards:
+            user-code: '0S40368'
+            branch-office-code: '111'
+          payment:
+            app-name: YAPE
+            client-code: HK
+          query:
+            app-name: YP
+            client-code: HK
+  #Llamadas a endpoints de ATLAS      
+  http-client:
+    yape:
+      recharge:
+        business-limit:
+          base-url: http://localhost:9895/payment/business/yapeapp/v1/recharge/limit/
+          #base-url: http://localhost:9002/business/yapeapp/v1/recharge/limit/
+          connect-timeout: 25000
+          read-timeout: 30000
+          write-timeout: 25000
+      business:
+        yapeaccounts:
+          #base-url: https://administration-mock-v1.ocpappsdesa.credito.bcp.com.pe
+          base-url: http://localhost:9895/payment/
+          connect-timeout: 25000
+          read-timeout: 30000
+          write-timeout: 25000
+        suspectdata:
+          #base-url: https://administration-mock-v1.ocpappsdesa.credito.bcp.com.pe
+          base-url: http://localhost:9895/payment/
+          connect-timeout: 25000
+          read-timeout: 30000
+          write-timeout: 25000
+          component:
+            default: business-suspect-data-v1
+        parameter-configuration:
+          base-url: http://localhost:9895/payment/channel-specific/e-branch-management/v1/parameter/configuration/
+          connect-timeout: 25000
+          read-timeout: 30000
+          write-timeout: 25000
+      cross:
+        channel-specific:
+          e-branch-management:
+            device:
+              base-url: http://localhost:9895/payment/
+              connect-timeout: 25000
+              read-timeout: 30000
+              write-timeout: 25000
+    atlas:
+      business:
+        providedservicepayment:
+          #base-url: https://apimeu2yaped10.azure-api.net
+          base-url: http://localhost:9895/payment/bs-provided-service-payments-v1/payments/payment-execution/v1/
+          connect-timeout: 25000
+          read-timeout: 30000
+          write-timeout: 25000
+        atlascredential:
+          #base-url: https://int.apisdevbcp.com
+          base-url: http://localhost:9895/payment/
+          connect-timeout: 25000
+          read-timeout: 30000
+          write-timeout: 25000
+      cross:
+        customer-management:
+          product-service:
+            cards:
+              #base-url: https://cards-v2.ocpappsdesa.credito.bcp.com.pe
+              base-url: http://localhost:9895/payment/
+              connect-timeout: 25000
+              read-timeout: 30000
+              write-timeout: 25000
+              component:
+                default: atlas-cross-services-customer-management-product-service-cards-v2
+            secuence:
+              base-url: http://localhost:9895/payment/
+              connect-timeout: 25000
+              read-timeout: 30000
+              write-timeout: 25000
+        credential:
+          clientId: 9c063a2a-5143-41c7-80ca-88d1ccfa0da9
+          secretKey: 83babcdf-2150-4c2a-abcf-3c879dc85d17
+          apis:
+            atlas-service-bills:
+              resource-uri: '/party/party-data-management/v1/service-bills'
+              http-method: GET
+            atlas-sequence:
+              resource-uri: '/party/party-data-management/v1/service-bills'
+              http-method: GET
+            atlas-provided-service-payment:
+              resource-uri: '/party/party-data-management/v1/service-bills'
+              http-method: GET
+            atlas-financial-transaction:
+              resource-uri: '/party/party-data-management/v1/service-bills'
+              http-method: GET
+            atlas-cards:
+              resource-uri: '/party/party-data-management/v1/service-bills'
+              http-method: GET
+
+      support:
+        error-catalog-v2:
+          base-url: https://ass-error-catalog-v2.ocpappsdesa.credito.bcp.com.pe/
+          connect-timeout: 300
+          read-timeout: 1200
+          write-timeout: 800
+
+  yape:
+    account-detail:
+      families:
+        '005':
+          name: Ahorros
+          product: '017'
+          description: AHO
+        '004':
+          name: Corriente
+          product: '016'
+          description: CTE
+    glosa-utc:
+      destinofijo:
+        '016':
+          origen: 4701
+          destino: 2701
+          descripcion: 'TRAN.CTAS.TERC.BM'
+        '017':
+          origen: 4703
+          destino: 2701
+          descripcion: 'TRAN.CTAS.TERC.BM'
+        '022':
+          origen: 4701
+          destino: 2701
+          descripcion: 'TRAN.CTAS.TERC.BM'
+        '025':
+          origen: 4050
+          destino: 2701
+          descripcion: 'TRAN.CTAS.TERC.BM'
+        '000':
+          origen: 4050
+          destino: 2701
+          descripcion: 'TRAN.CTAS.TERC.BM'
+    encryption:
+      enabled: true
+      cipher:
+        algorithm: AES/CTR/NoPadding
+        key: 9548998E06A89477426F1BA12DED06B8
+        initialization-vector: initializationIv
+      key-vault:
+        key-identifier: https://akvteu2yaped10.vault.azure.net/keys/yape-key-hash-rsa-cer/49bc384b01be45a8acab25da252ca0d9
+        decrypt-algorithm: RSA-OAEP
+        credentials:
+          client-id: /opt/security/certs/yape-keyvault-client-id/yape-keyvault-client-id
+          client-public-certificate-file: /opt/security/certs/yape-keyvault-public-cert/yape-keyvault-public-cert.pem
+          client-private-key-file: /opt/security/certs/yape-keyvault-private-key/yape-keyvault-private-key.key
+        secrets:
+          key: prueba
+      default: #sin key vault
+        keyboard: tokenlocal
+    limit:
+      token:
+        hash-key: token
+        hash-algorithm: 'HmacSHA256'
+    limitCodes:
+      YPREC1003: limit-sender-input-daily
+      YPREC1004: limit-sender-input-montly
+      YPREC1005: limit-receiver-output-daily
+      YPREC1006: limit-receiver-output-montly
+    codes:
+      invalidCellphone:
+        CP0001: Invalid cellphone for movistar
+    rechargeLimits:
+      senderDia: 100
+      senderMes: 200
+      receiverDia: 50
+      receiverMes: 100
+    session-user:
+      map-memory-user: 'yapeappuser'
+      claim-jwt-user: 'users'
+    redis:
+      mapmemory:
+        idmap: idRecharge
+        common:
+          idmap: JwtCrossMap
+          jwt-duration: 'PT7M'
+          jwt-key: TokenGateway
+          jwt-key-zconnect: TokenGatewayZconnect
+      duration: 8 #minutes
+    lastRecharges:
+      lengthDefault: 3
+      limitMaximum: 5
+    paymentVerifyTypeCode: '05'
+    cellphoneDigits: 9
+    sessionReferenceLength: 50
+    lynx-additionalField04: 'false'
+    lynx-host: 'AKSEU2Y'
+    parameters:
+      companies:
+        #movistar: {serviceProviderReferenceId: 'TDP', providedServiceReferenceId: '0000', shortNameServiceProvider: 'TMOV', nameServiceProvider: 'RECARGAS VIRTUALES', depositAccountId: '1931488449036', familyCode: '004', productCode: '016'}
+        #claro: {serviceProviderReferenceId: 'CLARO', providedServiceReferenceId: '0000', shortNameServiceProvider: 'CLAR', nameServiceProvider: 'CLARO RECARGA',depositAccountId: '1931488449036',familyCode: '004',productCode: '016'}
+        movistar: {serviceProviderReferenceId: '511006457', providedServiceReferenceId: '1000', shortNameServiceProvider: 'TMOV', nameServiceProvider: 'RECARGAS VIRTUALES', depositAccountId: '1931488449036', familyCode: '004', productCode: '016', ruc: '201234567890'}
+        claro: {serviceProviderReferenceId: '511006457', providedServiceReferenceId: '1000', shortNameServiceProvider: 'CLAR', nameServiceProvider: 'CLARO RECARGA',depositAccountId: '1931488449036',familyCode: '004',productCode: '016', ruc: '209876543210'}
+        entel: {serviceProviderReferenceId: 'ENTEL', providedServiceReferenceId: '3000', shortNameServiceProvider: 'ENTE', nameServiceProvider: 'RECARGA NUMERO CELULAR',depositAccountId: '',familyCode: '',productCode: '', ruc: ''}
+        bitel: {serviceProviderReferenceId: 'VIETTEL', providedServiceReferenceId: '2001', shortNameServiceProvider: 'VIET', nameServiceProvider: 'BITEL RECARGA',depositAccountId: '',familyCode: '',productCode: '', ruc: ''}
+    configuration:
+      version: 1.0
+      companies:
+        - code: '01'
+          name: Movistar
+          url: 'https://staceu2yapebackd10.blob.core.windows.net/yape-recargas-img/Movistar.png'
+          enable: true
+        - code: '02'
+          name: Claro
+          url: 'https://staceu2yapebackd10.blob.core.windows.net/yape-recargas-img/Claro.png'
+          enable: true
+        - code: '03'
+          name: Entel - Muy pronto
+          url: ''
+          enable: false
+        - code: '04'
+          name: Bitel - Muy pronto
+          url: ''
+          enable: false
+      defaultAmounts: [5, 7, 10]
+      amount:
+        min: 3
+        max: 30
+    errors:
+      codes:
+        toNotRetry:
+          - TL0003
+          - TL0012
+        technical:
+          - TL0004
+          - TL0005
+          - TL0009
+          - TL9999
+      code:
+        recharge_limit-min-amount:
+          code: YPREC0001
+          description: 'Recarga mínima de S/3'
+        recharge_limit-max-amount:
+          code: YPREC0002
+          description: 'Recarga máxima de S/30'
+        recharge_limit-sender-input-daily:
+          code: YPREC0003
+          detail: 'Recuerda que tu límite diario es S/ 100'
+          description: 'No hemos podido realizar tu recarga.'
+        recharge_limit-sender-input-montly:
+          code: YPREC0004
+          detail: 'Recuerda que tu límite mensual es S/ 200'
+          description: 'No hemos podido realizar tu recarga.'
+        recharge_limit-receiver-output-daily:
+          code: YPREC0005
+          detail: 'Vuelve a intentarlo mañana.'
+          description: 'La persona ha llegado a su monto límite del día.'
+        recharge_limit-receiver-output-montly:
+          code: YPREC0006
+          description: 'La persona ha llegado a su monto límite del mes.'
+        recharge_service-bill-cellphone-doesnot-exists:
+          code: YPREC0007
+          description: 'El número ingresado no existe'
+        recharge_payment-not-enough-money-account:
+          code: YPREC0008
+          detail: 'Elige otro monto a recargar'
+          description: 'No cuentas con saldo suficiente para realizar la recarga.'    
+        recharge_blocked-cellphone:
+          code: YPREC0009
+          detail: 'Por favor comunícate con nosotros a través de Facebook Messenger.'
+          description: 'Uno o más datos han sido bloqueados temporalmente'
+        recharge_yapeaccount-not-received:
+          code: YPREC0010
+          detail: 'Revisa que la recarga no figure en tus movimientos antes de volver a intentarlo.'
+          description: 'Ocurrió un problema.'
+        recharge_yapeaccount-not-exist:
+          code: YPREC0011
+          detail: 'Revisa que la recarga no figure en tus movimientos antes de volver a intentarlo.'
+          description: 'Ocurrió un problema.'
+        recharge_atlas-bcpcard-not-active:
+          code: YPREC0012
+          detail: 'Ingresa otra tarjeta para continuar...'
+          description: 'Tu tarjeta está bloqueada.'
+        recharge_atlas-jwt-service-error:
+          code: YPREC0013
+          detail: 'Revisa que la recarga no figure en tus movimientos antes de volver a intentarlo.'
+          description: 'Ocurrió un problema.'
+        recharge_atlas-sequence-error:
+          code: YPREC0014
+          detail: 'Revisa que la recarga no figure en tus movimientos antes de volver a intentarlo.'
+          description: 'Ocurrió un problema.'
+        recharge_atlas-service-bill-error:
+          code: YPREC0015
+          detail: 'Revisa que la recarga no figure en tus movimientos antes de volver a intentarlo.'
+          description: 'Ocurrió un problema.'
+        recharge_atlas-financial-transaction-error:
+          code: YPREC0016
+          detail: 'Revisa que la recarga no figure en tus movimientos antes de volver a intentarlo.'
+          description: 'Ocurrió un problema.'
+        recharge_atlas-service-payment-error:
+          code: YPREC0017
+          detail: 'Revisa que la recarga no figure en tus movimientos antes de volver a intentarlo.'
+          description: 'Ocurrió un problema.'
+        recharge_type-invalid:
+          code: TL0003
+          description: 'Los datos proporcionados no son validos.'
+        recharge_companycode-disable:
+          code: YPREC0018
+          description: 'La compañia elegida no se encuentra activa'
+        recharge_currencycode-invalid:
+          code: TL0003
+          description: 'Los datos proporcionados no son validos.'
+        recharge_atlas-card-service-error:
+          code: YPREC0019
+          detail: 'Revisa que la recarga no figure en tus movimientos antes de volver a intentarlo.'
+          description: 'Ocurrió un problema.'
+        recharge_cellphonetorecharge-invalid:
+          code: TL0003
+          detail: 'El numero a recargar es requerido para el tipo recibido'
+          description: 'Los datos proporcionados no son validos.'
+        recharge_nametorecharge-invalid:
+          code: TL0003
+          detail: 'El nombre a recargar es requerido para el tipo recibido'
+          description: 'Los datos proporcionados no son validos.'
+        recharge_configuration-error:
+          code: TCONFIG0001
+          detail: 'Se ha producido un error al querer obtener la configuracion'
+          description: 'Error al obtener la configuracion.'
+        recharge_suspectdata-notworking:
+          code: YPREC0020
+          detail: 'Revisa que la recarga no figure en tus movimientos antes de volver a intentarlo.'
+          description: 'Ocurrió un problema.'
+        recharge_device-notworking:
+          code: YPREC0021
+          detail: 'Revisa que la recarga no figure en tus movimientos antes de volver a intentarlo.'
+          description: 'Ocurrió un problema.'
+
+# Configuration kafka consumers and producers will be on bitbucket
+atlas:
+  event:
+    kafka:
+      header:
+        required:
+          enabled: true
+          names:
+            - app-code
+            - caller-name
+            - Request-ID
+            - Authorization
+            - request-date
+      active: true
+      schema-registry-url: "http://localhost:8080"
+      producers:
+        default: # this properties will remove to application.yml generic
+          properties: # all kafka properties
+            #bootstrap.servers: ehubeu2yaped10.servicebus.windows.net:9093
+            bootstrap.servers: localhost:19092
+            # event hub config
+            #security.protocol: SASL_SSL
+            security.protocol: PLAINTEXT
+            sasl.mechanism: PLAIN
+            #sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="$ConnectionString" password="Endpoint=sb://ehubeu2yaped10.servicebus.windows.net/;SharedAccessKeyName=ehub_yape_atlas;SharedAccessKey=0HOhsAi8wstWJdsJNGXWFX40T6e18RYVzlOHjpUs4rY=";
+            auto.offset.reset: earliest
+            key.serializer: org.apache.kafka.common.serialization.StringSerializer
+            value.serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+            acks: all
+            retries: 0
+            batch-size: 16384
+            buffer-memory: 33554432
+            poll: 3000
+            enable.auto.commit: false
+        producer-recharge: 
+          topic: "com-bcp-yape-recharge"
+          schema:
+            version: "1.0"
+            valueSchema: '{"namespace":"com.bcp.atlas.services.yape.transaction.adapter.model.avro","type":"record","name":"RechargePerformedEvent","fields":[{"name":"numOpe","type":"string"},{"name":"fullName","type":"string"},{"name":"date","type":"string"},{"name":"amount","type":[{"type":"string","java-class":"java.math.BigDecimal"}]},{"name":"idCurrency","type":"int"},{"name":"status","type":"int"},{"name":"requestId","type":"string"},{"name":"providerIdOrig","type":"int"},{"name":"phoneNumberOrig","type":"string"},{"name":"idYapeAccountOrig","type":"string"},{"name":"cardNumberOrig","type":"string"},{"name":"accountNumberOrig","type":"string"},{"name":"phoneNumberDest","type":"string"},{"name":"idYapeAccountDest","type":["null","string"]},{"name":"companyCode","type":"string"},{"name":"company","type":"string"},{"name":"type","type":"int"},{"name":"nameToRecharge","type":"string"},{"name":"description","type":"string"},{"name":"email","type":"string"},{"name":"idTransaction","type":"string"},{"name":"informationDetails","type":{"name":"InformationDetails","type":"record","fields":[{"name":"numOpeCompany","type":"string"},{"name":"ruc","type":"string"},{"name":"hour","type":"string"},{"name":"saleValue","type":"string"},{"name":"subTotalAmount","type":"string"},{"name":"igv","type":"string"},{"name":"totalAmount","type":"string"},{"name":"enterprise","type":"string"},{"name":"validity","type":"string"},{"name":"additionalInformation","type":["null","string"]}]}}]}'
+          properties:
+            group.id: $Default
+        producer-transaction: 
+          topic: "com-bcp-yape-payments"
+          schema:
+            version: "1.0"
+            valueSchema: '{"namespace":"com.yape.services.cross.financialmessageanalysis.adapter.model.avro","type":"record","name":"TransactionPerformedEvent","fields":[{"name":"id","type":"string"},{"name":"legacyId","type":"int"},{"name":"idPendingTransaction","type":["null","string"]},{"name":"idWithdrawal","type":["null","string"]},{"name":"numOpe","type":"string"},{"name":"date","type":"string"},{"name":"amount","type":[{"type":"string","java-class":"java.math.BigDecimal"}]},{"name":"idCurrency","type":"int"},{"name":"comment","type":"string"},{"name":"trxType","type":"int"},{"name":"routeType","type":"int"},{"name":"otp","type":"int"},{"name":"providerIdOrig","type":"int"},{"name":"bucketValOrig","type":"string"},{"name":"phoneNumberOrig","type":"string"},{"name":"cardNumberOrig","type":["null","string"]},{"name":"accountNumberOrig","type":["null","string"]},{"name":"visaTokenOrig","type":["null","string"]},{"name":"codUbaOrig","type":["null","string"]},{"name":"cardOwnerNameOrig","type":["null","string"]},{"name":"idAccountSettingsOrig","type":["null","string"]},{"name":"idUserOrig","type":["null","string"]},{"name":"idYapeAccountOrig","type":"string"},{"name":"idYapeAccountTypeOrig","type":"int"},{"name":"providerIdDest","type":["null","int"]},{"name":"bucketValDest","type":["null","string"]},{"name":"phoneNumberDest","type":["null","string"]},{"name":"cardNumberDest","type":["null","string"]},{"name":"accountNumberDest","type":["null","string"]},{"name":"visaTokenDest","type":["null","string"]},{"name":"codUbaDest","type":["null","string"]},{"name":"cardOwnerNameDest","type":["null","string"]},{"name":"idAccountSettingsDest","type":["null","string"]},{"name":"idUserDest","type":["null","string"]},{"name":"idYapeAccountDest","type":["null","string"]},{"name":"idYapeAccountTypeDest","type":["null","int"]},{"name":"qrTypeDest","type":["null","string"]},{"name":"idQrDest","type":["null","string"]},{"name":"referenceId","type":["null","string"]},{"name":"merchantId","type":["null","string"]},{"name":"merchantName","type":["null","string"]},{"name":"posX","type":["null","int"]},{"name":"posY","type":["null","int"]},{"name":"channel","type":"int"},{"name":"details","type":{"type":"array","items":{"type":"record","name":"FrameApi","fields":[{"name":"numOpe","type":"string"},{"name":"request","type":"string"},{"name":"response","type":"string"},{"name":"status","type":"int"}]}}}]}'
+          properties:
+            group.id: $Default
+
+resilience4j.circuitbreaker:
+  configs:
+    recharge-default:
+      registerHealthIndicator: true
+      slidingWindowSize: 50
+      failureRateThreshold: 50
+      minimumNumberOfCalls: 25
+      permittedNumberOfCallsInHalfOpenState: 10
+      automaticTransitionFromOpenToHalfOpenEnabled: false
+      waitDurationInOpenState: PT10S
+      recordFailurePredicate: com.yape.person.services.channel.yapeapp.recharge.application.circuitbreaker.CircuitBreakerRechargePredicate
+      recordExceptions:
+        - java.io.IOException
+        - java.net.SocketTimeoutException
+  instances:
+    atlas-credentials:
+      baseConfig: recharge-default
+    yape-rechargemovement:
+      baseConfig: recharge-default
+    atlas-servicepayment:
+      baseConfig: recharge-default
+    atlas-servicebills:
+      baseConfig: recharge-default
+    yape-suspectdata:
+      baseConfig: recharge-default
+    atlas-sequence:
+      baseConfig: recharge-default
+    atlas-accounts:
+      baseConfig: recharge-default
+    atlas-card:
+      baseConfig: recharge-default
+    recharge-limit:
+      baseConfig: recharge-default
